@@ -1,9 +1,24 @@
 version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    docker: 
-      - image: circleci/node:4.8.2-browsers
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      - node/with-cache:
+          steps:
+            - run: sudo apt-get install google-chrome-stable
+            - run: version=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+            - run: wget -qP "/tmp/" "https://chromedriver.storage.googleapis.com/${version}/chromedriver_linux64.zip"
+            - run: sudo unzip -o /tmp/chromedriver_linux64.zip -d /home/ubuntu/.rvm/gems/ruby-2.5.1/wrappers/chromedriver # in which ever location you want
+            - run: sudo chmod 755 /usr/bin/chromedriver
+            - run: sudo chown root:root /usr/bin/chromedriver
+            - run: sudo chmod +x /usr/bin/chromedriver
+            - run: npm install
+            - run: npm test
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
