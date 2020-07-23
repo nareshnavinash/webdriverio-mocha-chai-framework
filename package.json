@@ -7,7 +7,7 @@
     "test": "npx wdio run wdio.conf.js",
     "lint": "eslint .",
     "report": "allure serve reports/allure-results",
-    "report.ci": "allure generate reports/allure-results --clean -o allure-report"
+    "report.ci": "npx allure generate reports/allure-results --clean -o allure-report"
   },
   "repository": {
     "type": "git",
@@ -48,6 +48,7 @@
     "@wdio/sauce-service": "^6.0.13",
     "@wdio/selenium-standalone-service": "^6.0.12",
     "@wdio/spec-reporter": "^6.0.12",
+    "allure-commandline": "^2.13.0",
     "babel-eslint": "^10.1.0",
     "chromedriver": "^84.0.0",
     "eslint": "^7.5.0",
