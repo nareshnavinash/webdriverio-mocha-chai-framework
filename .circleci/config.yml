@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: sudo apt-get install gconf-service
             - run: sudo apt-get install google-chrome-stable
             - run: version=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
             - run: wget -qP "/tmp/" "https://chromedriver.storage.googleapis.com/${version}/chromedriver_linux64.zip"
