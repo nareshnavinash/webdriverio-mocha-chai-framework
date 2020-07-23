@@ -3,16 +3,6 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
-
-  linter-and-test:
     docker: 
       - image: circleci/node:4.8.2-browsers
     steps:
@@ -22,8 +12,7 @@ jobs:
           - run: npm install
           - run: npm test
 
-
 workflows:
-    linter-and-test:
+    build-and-test:
       jobs:
-        - linter-and-test
+        - build-and-test
