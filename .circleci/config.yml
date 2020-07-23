@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14.5-browsers
+      - image: circleci/node:dubnium-buster-browsers-legacy
     working_directory: ~/project
     steps:
       - checkout
