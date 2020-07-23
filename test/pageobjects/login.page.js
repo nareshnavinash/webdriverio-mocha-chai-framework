@@ -19,9 +19,9 @@ class LoginPage extends Page {
      * @return {void} returns nothing
      */
   login(username, password) {
-    this.inputUsername.setValue(username);
-    this.inputPassword.setValue(password);
-    this.btnSubmit.click();
+    browser.setValue(this.inputUsername, username);
+    browser.setValue(this.inputPassword, password);
+    browser.elementClick(this.btnSubmit)
   }
 
   /**
