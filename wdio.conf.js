@@ -1,4 +1,4 @@
-const utilities= require("./utilities/Utilities");
+const utilities= require("./test/utilities/utilities");
 const chai = require('chai');
 const allure = require('@wdio/allure-reporter').default;
 

@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  allure: ayte/allure@0.1.3
 
 jobs:
   build:
@@ -29,6 +32,10 @@ jobs:
           name: "Run tests"
           command: |
             npm run test
+      - run:
+          name: Allure report generation
+          command: |
+            allure generate --report-dir ./reports/allure-results
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
