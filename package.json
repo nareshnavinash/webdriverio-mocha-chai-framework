@@ -33,8 +33,7 @@
   "dependencies": {
     "@wdio/cli": "^6.0.13",
     "@wdio/sync": "^6.0.12",
-    "chai": "^4.2.0",
-    "superagent": "^5.2.2"
+    "chai": "^4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -50,7 +49,6 @@
     "@wdio/selenium-standalone-service": "^6.0.12",
     "@wdio/spec-reporter": "^6.0.12",
     "babel-eslint": "^10.1.0",
-    "chai-webdriverio": "^1.0.0",
     "chromedriver": "^84.0.0",
     "eslint": "^7.5.0",
     "eslint-config-google": "^0.14.0",
