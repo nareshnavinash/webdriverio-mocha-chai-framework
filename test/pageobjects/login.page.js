@@ -19,7 +19,7 @@ class LoginPage extends Page {
      * @return {void} returns nothing
      */
   login(username, password) {
-    this.inputUsername.waitForExist(1000)
+    this.inputUsername.waitForExist(1000);
     this.inputUsername.setValue(username);
     this.inputPassword.setValue(password);
     this.btnSubmit.click();
