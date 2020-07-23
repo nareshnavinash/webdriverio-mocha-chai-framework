@@ -15,12 +15,7 @@ jobs:
       - run:
           name: "Install dependencies"
           command: |
-            npm install  
-      -run:
-          name: "Installing ubuntu dependencies"
-          command: |
-            sudo apt-get install libnss3-dev
-
+            npm install
       - save_cache:
           paths:
             - node_modules
