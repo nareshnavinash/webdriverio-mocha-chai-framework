@@ -4,6 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:dubnium-buster-browsers-legacy
+    resource_class: small
     working_directory: ~/project
     steps:
       - checkout
