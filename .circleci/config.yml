@@ -33,7 +33,7 @@ jobs:
           command: |
             npm run test
       - run:
-          name: Allure report generation
+          name: Allure report generation in circleci
           command: |
             allure generate --report-dir ./reports/allure-results
       - store_test_results:
