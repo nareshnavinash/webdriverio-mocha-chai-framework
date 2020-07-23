@@ -1,8 +1,10 @@
 version: 2.1
 orbs:
-  node: huli/webdriverio:latest
+  node: circleci/node@1.1.6
 jobs:
   build-and-test:
+    docker:
+      - image: huli/webdriverio
     executor:
       name: node/default
     steps:
