@@ -31,11 +31,8 @@ jobs:
           name: "Run tests in Chrome"
           command: |
             browser=chrome npm run test
-      - run: wget https://download-installer.cdn.mozilla.net/pub/firefox/releases/45.0.1/linux-i686/en-US/firefox-45.0.1.tar.bz2
-      - run: tar xvf firefox*.tar.bz2
-      - run: ./firefox/firefox
-      - run: sudo mv firefox/ /opt
-      - run: sudo ln -s /opt/firefox/firefox /usr/bin/firefox-new
+      - run: sudo add-apt-repository ppa:mozillateam/firefox-next
+      - run: sudo apt install firefox
       - run:
           name: "Run tests in Firefox"
           command: |
