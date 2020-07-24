@@ -6,16 +6,15 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:dubnium-buster-browsers-legacy
-    resource_class: small
+      - image: circleci/node:dubnium-buster-browsers-legacy # Image that supports browser automation using JS
+    resource_class: small # Specifying the size of the instance that is needed to run the tests
     working_directory: ~/project
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - node_modules-{{ checksum "package.json" }}
+            - node_modules- # fallback to using the latest cache if no exact match is found
       - run:
           name: "Install dependencies"
           command: |
@@ -23,15 +22,19 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package.json" }}
       - run:
           name: "Check ESlinter Validation"
           command: |
             npm run lint
       - run:
-          name: "Run tests"
+          name: "Run tests in Chrome"
           command: |
-            npm run test
+            browser=chrome npm run test
+      - run:
+          name: "Run tests in Firefox"
+          command: |
+            browser=firefox npm run test
       - run:
           name: Allure report generation in circleci
           command: |

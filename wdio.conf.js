@@ -2,6 +2,74 @@ const utilities= require("./test/utilities/utilities");
 const chai = require('chai');
 const allure = require('@wdio/allure-reporter').default;
 
+
+// Getting config value from the run time
+// This is the configuration file where we need to specify the URL against which the tests has to run
+// Can use this to run against different environment using the same suite
+var file_name = process.env.target || 'production'
+const config = require('./test/configs/' + file_name + '.json');
+console.log('-'.repeat(50) + 'Taking the following config setup to run' + '-'.repeat(50))
+console.log(config)
+console.log('-'.repeat(146))
+
+
+// If the tests are running apart from mac or windows forcing headless mode of run
+var headless = process.env.headless || false
+if (process.platform != 'darwin' && process.platform != 'win32') {
+    headless = true
+}
+
+
+// Setting browser arguments based on the mode of run
+let chrome_browser_args = {}
+let firefox_browser_args = {}
+if (headless) {
+    chrome_browser_args = ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--window-size=1920,1080']
+    firefox_browser_args = ["-headless"]
+} else {
+    chrome_browser_args = ['--disable-dev-shm-usage', '--window-size=1920,1080']
+    firefox_browser_args = []
+}
+
+
+// Setting browser capabilities based on the user input on broser
+// If the brower input is not present, chrome is forced
+// If ther browser input has unsupported browser, chrome is forced
+var runTimeBrowser = process.env.browser || 'chrome'
+var maxBrowserInstance = process.env.maxCount || 2
+let runTimeCapabilities = null
+let runTimeServices = null
+if (runTimeBrowser == 'chrome') {
+    runTimeServices = ['chromedriver']
+    runTimeCapabilities = [{
+        maxInstances: maxBrowserInstance,
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: chrome_browser_args
+        }
+    }]
+} else if (runTimeBrowser == 'firefox') {
+    runTimeServices = ['geckodriver']
+    runTimeCapabilities = [{
+        maxInstances: maxBrowserInstance,
+        browserName: 'firefox',
+        "moz:firefoxOptions":{
+            args: firefox_browser_args
+        }
+    }]
+} else {
+    console.log('Browser is undefined, using chrome browser to run the tests')
+    runTimeServices = ['chromedriver']
+    runTimeCapabilities = [{
+        maxInstances: maxBrowserInstance,
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: chrome_browser_args
+        }
+    }]
+}
+
+
 // Max time for single test case execution
 let timeout = process.env.DEBUG ? 99999999 : 120000;
 let elementTimeout = 10000;
@@ -54,22 +122,23 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
+    // capabilities: [{
 
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instances available you can make sure that not more than
-        // 5 instances get started at a time.
-        maxInstances: 3,
-        //
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-            args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--window-size=1920,1080']
-        }
-        // If outputDir is provided WebdriverIO can capture driver session logs
-        // it is possible to configure which logTypes to include/exclude.
-        // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-        // excludeDriverLogs: ['bugreport', 'server'],
-    }],
+    //     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+    //     // grid with only 5 firefox instances available you can make sure that not more than
+    //     // 5 instances get started at a time.
+    //     maxInstances: 3,
+    //     //
+    //     browserName: 'chrome',
+    //     'goog:chromeOptions': {
+    //         args: chrome_browser_args
+    //     }
+    //     // If outputDir is provided WebdriverIO can capture driver session logs
+    //     // it is possible to configure which logTypes to include/exclude.
+    //     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+    //     // excludeDriverLogs: ['bugreport', 'server'],
+    // }],
+    capabilities: runTimeCapabilities,
     //
     // ===================
     // Test Configurations
@@ -117,24 +186,24 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver',
-        // ['selenium-standalone', {
-        //     logPath: 'logs',
-        //     installArgs: {
-        //         drivers: {
-        //             chrome: { version: '79.0.3945.88' },
-        //             firefox: { version: '0.26.0' }
-        //         }
-        //     },
-        //     args: {
-        //         drivers: {
-        //             chrome: { version: '79.0.3945.88' },
-        //             firefox: { version: '0.26.0' }
-        //         }
-        //     },
-        // }]
-    ],
-
+    // services: ['chromedriver',
+    //     // ['selenium-standalone', {
+    //     //     logPath: 'logs',
+    //     //     installArgs: {
+    //     //         drivers: {
+    //     //             chrome: { version: '79.0.3945.88' },
+    //     //             firefox: { version: '0.26.0' }
+    //     //         }
+    //     //     },
+    //     //     args: {
+    //     //         drivers: {
+    //     //             chrome: { version: '79.0.3945.88' },
+    //     //             firefox: { version: '0.26.0' }
+    //     //         }
+    //     //     },
+    //     // }]
+    // ],
+    services: runTimeServices,
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks.html
@@ -223,6 +292,7 @@ exports.config = {
         global.allure = allure;
         global.chai = chai;
         global.utilities = utilities;
+        global.config = config;
     },
     /**
      * Runs before a WebdriverIO command gets executed.
