@@ -32,6 +32,8 @@ class Utilities {
       return path;
     } else {
       fs.writeFileSync(path, process.env.privatekey);
+      console.log('((((((((((((((((((((((((((((((((' + process.env.privatekey);
+      return path;
     }
   }
 
