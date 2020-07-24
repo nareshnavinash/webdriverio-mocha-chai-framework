@@ -4,7 +4,7 @@ const SecurePage = require('../pageobjects/secure.page');
 describe('My Login application', () => {
   it('should login with valid credentials', () => {
     LoginPage.open();
-    console.log(config.url)
+    console.log(config.url);
 
     LoginPage.login('tomsmith', 'SuperSecretPassword!');
     expect(SecurePage.flashAlert).toBeExisting();
