@@ -30,13 +30,7 @@ jobs:
       - run:
           name: "Run tests in Chrome"
           command: |
-            browser=chrome npm run test
-      - run: sudo add-apt-repository ppa:mozillateam/firefox-next
-      - run: sudo apt install firefox
-      - run:
-          name: "Run tests in Firefox"
-          command: |
-            browser=firefox npm run test
+            npm run test
       - run:
           name: Allure report generation in circleci
           command: |
