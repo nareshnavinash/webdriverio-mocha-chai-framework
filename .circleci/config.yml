@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:dubnium-buster-browsers-legacy # Image that supports browser automation using JS
+      - image: circleci/node:10-buster-browsers-legacy # Image that supports browser automation using JS
     resource_class: small # Specifying the size of the instance that is needed to run the tests
     working_directory: ~/project
     steps:
