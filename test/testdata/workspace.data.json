@@ -1,0 +1,12 @@
+{
+    "cancelData": {
+        "name": "Cancel Workspace",
+        "summary": "To validate the workspace cancel functionality in the create workspace",
+        "type": "Personal"
+    },
+    "createData": {
+        "name": "Creating a Workspace",
+        "summary": "To validate the workspace create functionality in the create workspace",
+        "type": "Personal"
+    }
+}

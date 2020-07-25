@@ -36,7 +36,7 @@ if (headless) {
 // If the brower input is not present, chrome is forced
 // If ther browser input has unsupported browser, chrome is forced
 var runTimeBrowser = process.env.browser || 'chrome'
-var maxBrowserInstance = process.env.threads || 2
+var maxBrowserInstance = process.env.threads || 1
 let runTimeCapabilities = null
 let runTimeServices = null
 if (runTimeBrowser == 'chrome') {
@@ -72,7 +72,7 @@ if (runTimeBrowser == 'chrome') {
 
 // Max time for single test case execution
 let timeout = process.env.DEBUG ? 99999999 : 120000;
-let elementTimeout = 60000;
+let elementTimeout = 20000;
 
 
 exports.config = {

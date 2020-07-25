@@ -38,8 +38,8 @@ class Utilities {
     }
   }
 
-  static generatePublicAndPrivateKeys() {
-    const examplekey = new NodeRSA({ 'Naresh': 'Postman_tests' });
+  static generatePublicAndPrivateKeys(key) {
+    const examplekey = new NodeRSA(key);
     fs.writeFileSync(Utilities.getPrivateKeyPath(), examplekey.exportKey('pkcs8-private'));
     fs.writeFileSync(Utilities.getPublicKeyPath(), examplekey.exportKey('pkcs8-public'));
   }
