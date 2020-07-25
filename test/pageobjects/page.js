@@ -8,7 +8,7 @@ module.exports = class Page {
     * @param {string} path of the sub page (e.g. /path/to/page.html)
     * @return {string}
     */
-  open(path) {
-    return browser.url(`https://the-internet.herokuapp.com/${path}`);
+  open(path='') {
+    return browser.url(config.url + path);
   }
 };

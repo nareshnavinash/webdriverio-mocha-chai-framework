@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+const rimraf = require('rimraf');
 const NodeRSA = require('node-rsa');
 
 class Utilities {
@@ -47,16 +49,42 @@ class Utilities {
     const publickey = new NodeRSA();
     const jsonConfig = { 'value': configToStore };
     publickey.importKey(fs.readFileSync(Utilities.getPublicKeyPath(), 'utf8'));
-    const key = (publickey.encrypt(jsonConfig, 'base64'));
+    const key = (publickey.encrypt(jsonConfig, 'base64'), 'utf8');
     return key;
   }
 
   static readSecrets(secret) {
-    const decrypttext = secret;
-    const privatekey = new NodeRSA();
-    privatekey.importKey(fs.readFileSync(Utilities.getPrivateKeyPath(), 'utf8'));
-    const config = privatekey.decrypt(decrypttext, 'json');
-    return config.value;
+    if (secret.includes('utf8')) {
+      const privatekey = new NodeRSA();
+      privatekey.importKey(fs.readFileSync(Utilities.getPrivateKeyPath(), 'utf8'));
+      const config = privatekey.decrypt(secret, 'json');
+      return config.value;
+    } else {
+      return secret;
+    }
+  }
+
+  static removeDirectory(directory) {
+    try {
+      fs.readdir(directory, (err, files) => {
+        if (err) throw err;
+        console.log('Removing files from: ' + directory);
+        for (const file of files) {
+          if (file != '.keep') {
+            fs.unlink(path.join(directory, file), (err) => {
+              if (err) {
+                console.log('Cannot clear the files from the directory using rimraf');
+                rimraf(directory + '/*', function() {console.log('done');});
+              }
+            });
+          }
+        }
+      });
+    }
+    catch (e) {
+      console.log('Cannot clear the files from the directory using rimraf');
+      rimraf(directory + '/*', function() {console.log('done');});
+    }
   }
 }
 

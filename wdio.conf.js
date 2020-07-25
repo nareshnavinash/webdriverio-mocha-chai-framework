@@ -24,10 +24,10 @@ if (process.platform != 'darwin' && process.platform != 'win32') {
 let chrome_browser_args = {}
 let firefox_browser_args = {}
 if (headless) {
-    chrome_browser_args = ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--window-size=1920,1080']
+    chrome_browser_args = ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--window-size=1200,700']
     firefox_browser_args = ["-headless"]
 } else {
-    chrome_browser_args = ['--disable-dev-shm-usage', '--window-size=1920,1080']
+    chrome_browser_args = ['--disable-dev-shm-usage', '--window-size=1200,700']
     firefox_browser_args = []
 }
 
@@ -36,7 +36,7 @@ if (headless) {
 // If the brower input is not present, chrome is forced
 // If ther browser input has unsupported browser, chrome is forced
 var runTimeBrowser = process.env.browser || 'chrome'
-var maxBrowserInstance = process.env.maxCount || 2
+var maxBrowserInstance = process.env.threads || 2
 let runTimeCapabilities = null
 let runTimeServices = null
 if (runTimeBrowser == 'chrome') {
@@ -72,7 +72,7 @@ if (runTimeBrowser == 'chrome') {
 
 // Max time for single test case execution
 let timeout = process.env.DEBUG ? 99999999 : 120000;
-let elementTimeout = 10000;
+let elementTimeout = 60000;
 
 
 exports.config = {
@@ -170,7 +170,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://uitestingplayground.com',
+    // baseUrl: 'http://uitestingplayground.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: elementTimeout,
@@ -280,8 +280,12 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    // beforeSession: function (config, capabilities, specs) {
-    // },
+    beforeSession: function (config, capabilities, specs) {
+        utilities.removeDirectory('./reports/allure-results/')
+        utilities.removeDirectory('./reports/json/')
+        utilities.removeDirectory('./reports/junit/')
+        utilities.removeDirectory('./reports/screenshot/')
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -293,6 +297,7 @@ exports.config = {
         global.chai = chai;
         global.utilities = utilities;
         global.config = config;
+        global.assert = chai.assert;
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -383,8 +388,12 @@ exports.config = {
      * @param {<Object>} results object containing test results
      */
     onComplete: function(exitCode, config, capabilities, results) {
-        const mergeResults = require('wdio-json-reporter/mergeResults');
-        mergeResults('./reports/json', 'wdio-*', 'testResults.json')
+        try {
+            const mergeResults = require('wdio-json-reporter/mergeResults');
+            mergeResults('./reports/json', 'wdio-*', 'testResults.json');
+        } catch(e) {
+            console.log("Errored while merging the json results " + e)
+        }
     },
     /**
     * Gets executed when a refresh happens.

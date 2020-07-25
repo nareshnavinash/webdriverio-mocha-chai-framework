@@ -9,7 +9,8 @@ class LoginPage extends Page {
      */
   get inputUsername() {return $('#username');}
   get inputPassword() {return $('#password');}
-  get btnSubmit() {return $('button[type="submit"]');}
+  get rememberMeCheckBox() {return $('#remember-me-checkbox');}
+  get btnSignIn() {return $('#sign-in-btn');}
 
   /**
      * a method to encapsule automation code to interact with the page
@@ -22,7 +23,12 @@ class LoginPage extends Page {
     this.inputUsername.waitForExist(1000);
     this.inputUsername.setValue(username);
     this.inputPassword.setValue(password);
-    this.btnSubmit.click();
+    this.rememberMeCheckBox.click();
+    this.btnSignIn.click();
+  }
+
+  isDisplayed() {
+    return this.inputUsername.isExisting();
   }
 
   /**
@@ -30,7 +36,7 @@ class LoginPage extends Page {
      * @return {void}
      */
   open() {
-    return super.open('login');
+    return super.open();
   }
 }
 
