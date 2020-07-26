@@ -20,6 +20,10 @@ if (process.platform != 'darwin' && process.platform != 'win32') {
 }
 
 
+// Retries count
+var runTimeRetries = process.env.retry || 0
+
+
 // Setting browser arguments based on the mode of run
 let chrome_browser_args = {}
 let firefox_browser_args = {}
@@ -213,7 +217,7 @@ exports.config = {
     framework: 'mocha',
     //
     // The number of times to retry the entire specfile when it fails as a whole
-    // specFileRetries: 1,
+    specFileRetries: runTimeRetries,
     //
     // Whether or not retried specfiles should be retried immediately or deferred to the end of the queue
     // specFileRetriesDeferred: false,
@@ -230,7 +234,7 @@ exports.config = {
       }],
       ['junit', {
         outputDir: 'reports/junit',
-        outputFileFormat: function(options) { // optional
+        outputFileFormat: function(options) {
           return `test-${options.cid}-results.xml`
         }
       }],
