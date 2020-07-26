@@ -7,9 +7,11 @@
     "createData": {
         "name": "Creating a Workspace",
         "summary": "To validate the workspace create functionality in the create workspace",
+        "editSummary": "Edited summary to validate the edited data",
         "type": "Personal"
     },
     "messages": {
-        "personal_workspace_create_message": "Personal workspace created"
+        "personalWorkspaceCreateMessage": "Personal workspace created",
+        "workspaceEditMessage": "Workspace details updated"
     }
 }

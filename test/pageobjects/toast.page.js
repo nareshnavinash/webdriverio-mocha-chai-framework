@@ -1,9 +1,9 @@
 const Page = require('./page');
 
 class Toast extends Page {
-  
   get toastTitle() {return $('.pm-toast-title');}
   get toastBody() {return $('.pm-toast-body');}
+  get toastDismiss() {return $('button.pm-toast-dismiss');}
 
   // <h4 class="pm-h4 pm-toast-title">Personal workspace deleted</h4>
   // <div class="pm-toast-body">You've deleted the Creating a Workspace1595740862744 workspace.</div>
@@ -13,13 +13,19 @@ class Toast extends Page {
   isDisplayed() {
     return this.toastBody.isExisting();
   }
-  
+
   getToastTitle() {
-    return this.toastTitle.getText()
+    return this.toastTitle.getText();
   }
 
   getToastBody() {
-    return this.toastBody.getText()
+    return this.toastBody.getText();
+  }
+
+  dismissToastIfDisplayed() {
+    if (this.toastDismiss.isExisting()) {
+      this.toastDismiss.click();
+    }
   }
 }
 

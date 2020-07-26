@@ -1,7 +1,6 @@
 const Page = require('./page');
 
 class LoginPage extends Page {
-  
   get inputUsername() {return $('#username');}
   get inputPassword() {return $('#password');}
   get rememberMeCheckBox() {return $('#remember-me-checkbox');}

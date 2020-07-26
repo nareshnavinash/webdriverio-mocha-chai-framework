@@ -1,17 +1,15 @@
 const Page = require('./page');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class WorkSpace extends Page {
-  /**
-     * define selectors using getter methods
-     */
   get title() {return $('.pm-h1');}
   get workspaceList() {return $('.workspaces-list');}
   get workspaceAvailableNames() {return $('.rt-tbody');}
   get workspaceNamesList() {return $$('.workspace-table__title .pm-link[href*="/workspaces"]');}
   get createWorkspaceButton() {return $('button.workspace-list__create');}
+  workspaceMoreOptionsButton(count) {return $('div.rt-table div.rt-tbody div:nth-child(' + count + ') div.rt-td.workspace-table__actions button.pm-btn-icon');}
+  get workspaceRename() {return $('div.option=Rename');}
+  get workspaceEditDescription() {return $('div.option=Edit Description');}
+  get workspaceDelete() {return $('div.option=Delete');}
   get newWorkspaceName() {return $('input#ws-name');}
   get newWorkspaceSummary() {return $('textarea.pm-form-control');}
   get newWorkspaceType() {return $('.pm-toggle-switch span');}
@@ -20,6 +18,9 @@ class WorkSpace extends Page {
   get newWorkspaceInviteTeamMember() {return $('input.Select-input');}
   get newWorkspaceCreateNewWorkspaceButton() {return $('button.pm-actions__confirm');}
   get newWorkspaceCancelButton() {return $('button.pm-actions__cancel');}
+  get deleteWorkspacePopup() {return $('pm-modal-confirm');}
+  get deleteWorkspacePopupDeleteButton() {return $('.pm-modal-confirm .pm-modal-confirm__actions button.pm-modal-confirm__confirm');}
+  get deleteWorkspacePopupCancelButton() {return $('.pm-modal-confirm .pm-modal-confirm__actions button.pm-modal-confirm__cancel');}
 
   isDisplayed() {
     this.workspaceList.waitForExist(30000);
@@ -27,11 +28,12 @@ class WorkSpace extends Page {
   }
 
   getListedWorkspaces() {
-    var final = []
+    const final = [];
+    this.workspaceList.waitForExist(30000);
     for (const res of this.workspaceNamesList) {
-      final.push(res.getText())
+      final.push(res.getText());
     }
-    return final
+    return final;
   }
 
   enterDetailsInNewWorkspace(name, summary, type) {
@@ -55,6 +57,38 @@ class WorkSpace extends Page {
   enterDetailsAndCreateNewWorkspace(name, summary, type) {
     this.enterDetailsInNewWorkspace(name, summary, type);
     this.newWorkspaceCreateNewWorkspaceButton.click();
+  }
+
+  getWorkspaceCountInList(workspaceName) {
+    const workspacearray = this.getListedWorkspaces();
+    return workspacearray.indexOf(workspaceName) + 1;
+  }
+
+  editNameForWorkspace(workspace, name) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceRename.click();
+    assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    this.newWorkspaceName.setValue(name);
+    this.newWorkspaceCreateNewWorkspaceButton.click();
+  }
+
+  editDescriptionForWorkspace(workspace, description) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceEditDescription.click();
+    assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    this.newWorkspaceSummary.setValue(description);
+    this.newWorkspaceCreateNewWorkspaceButton.click();
+  }
+
+  getDescriptionforWorkspace(workspace) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceEditDescription.click();
+    const result = this.newWorkspaceSummary.getText();
+    this.newWorkspaceCancelButton.click();
+    return result;
   }
 }
 
