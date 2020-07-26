@@ -8,6 +8,12 @@ class Utilities {
     return Math.floor(Math.random() * Math.floor(max));
   }
 
+  /**
+   * a method to take screenshot and attach to allure
+   * @param {string} name Name of the screenshot
+   * @param {boolean} failure To mention whether the screenshot is because of failure
+   * @return {void} returns nothing
+   */
   static takeScreenshot(name, failure=false) {
     if (!name) name = moment().format('YYYY-MM-DDTH:mm:ss');
     const path = './reports/screenshot/';
@@ -24,10 +30,18 @@ class Utilities {
     allure.addAttachment(name, data, 'image/png');
   }
 
+  /**
+   * a method to return the public key path
+   * @return {string} returns the path of the public key
+   */
   static getPublicKeyPath() {
     return './secret_keys/public.key';
   }
 
+  /**
+   * a method to return the private key path
+   * @return {string} returns the path of the private key
+   */
   static getPrivateKeyPath() {
     const path = './secret_keys/private.key';
     if (fs.existsSync(path)) {
@@ -38,12 +52,22 @@ class Utilities {
     }
   }
 
+  /**
+   * a method to generate the public and private key
+   * @param {string} key String that is used to create the public key and private key
+   * @return {void} returns nothing
+   */
   static generatePublicAndPrivateKeys(key) {
     const examplekey = new NodeRSA(key);
     fs.writeFileSync(Utilities.getPrivateKeyPath(), examplekey.exportKey('pkcs8-private'));
     fs.writeFileSync(Utilities.getPublicKeyPath(), examplekey.exportKey('pkcs8-public'));
   }
 
+  /**
+   * a method to create the secret key for a normal string
+   * @param {string} value Gets the string which needs to be encrypted
+   * @return {string} returns the encrypted key
+   */
   static createSecrets(value) {
     const configToStore = value;
     const publickey = new NodeRSA();
@@ -53,6 +77,11 @@ class Utilities {
     return key;
   }
 
+  /**
+   * a method to decrypt the secret key to a normal string
+   * @param {string} secret Gets the encrypted string which needs to be decrypted
+   * @return {string} returns the decrypted string
+   */
   static readSecrets(secret) {
     if (secret.includes('utf8')) {
       const privatekey = new NodeRSA();
@@ -64,6 +93,11 @@ class Utilities {
     }
   }
 
+  /**
+   * a method to clear the files from the reports directory
+   * @param {string} directory Gets the path from which the files needs to be removed
+   * @return {void} returns nothing
+   */
   static removeDirectory(directory) {
     try {
       fs.readdir(directory, (err, files) => {

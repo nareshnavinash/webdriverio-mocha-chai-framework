@@ -1,7 +1,7 @@
 const LoginPage = require('../pageobjects/login.page');
 const WorkSpace = require('../pageobjects/workspace.page');
 const TestData = require('../testdata/workspace.data.json');
-const Collections = require('../pageobjects/collecgtions.page');
+const Collections = require('../pageobjects/collections.page');
 const Toast = require('../pageobjects/toast.page');
 const { assert } = require('chai');
 

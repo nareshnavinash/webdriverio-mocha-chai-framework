@@ -4,10 +4,10 @@
 */
 module.exports = class Page {
   /**
-    * Opens a sub page of the page
-    * @param {string} path of the sub page (e.g. /path/to/page.html)
-    * @return {string}
-    */
+  * Opens a sub page of the page
+  * @param {string} path of the sub page (e.g. /path/to/page.html)
+  * @return {string}
+  */
   open(path='') {
     return browser.url(config.url + path);
   }

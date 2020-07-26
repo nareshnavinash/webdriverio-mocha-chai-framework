@@ -7,12 +7,11 @@ class LoginPage extends Page {
   get btnSignIn() {return $('#sign-in-btn');}
 
   /**
-     * a method to encapsule automation code to interact with the page
-     * e.g. to login using username and password
-     * @param {string} username for the login page
-     * @param {string} password for the login page
-     * @return {void} returns nothing
-     */
+   * a method to login to postman
+   * @param {string} username for the login page
+   * @param {string} password for the login page
+   * @return {void} returns nothing
+   */
   login(username, password) {
     this.inputUsername.waitForExist(40000);
     this.inputUsername.setValue(username);
@@ -21,16 +20,12 @@ class LoginPage extends Page {
     this.btnSignIn.click();
   }
 
+  /**
+   * a method to return whether the page is displayed or not
+   * @return {boolean} returns true or false
+   */
   isDisplayed() {
     return this.inputUsername.isExisting();
-  }
-
-  /**
-     * overwrite specifc options to adapt it to page object
-     * @return {void}
-     */
-  open() {
-    return super.open();
   }
 }
 
