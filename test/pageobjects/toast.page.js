@@ -5,12 +5,8 @@ class Toast extends Page {
   get toastBody() {return $('.pm-toast-body');}
   get toastDismiss() {return $('button.pm-toast-dismiss');}
 
-  // <h4 class="pm-h4 pm-toast-title">Personal workspace deleted</h4>
-  // <div class="pm-toast-body">You've deleted the Creating a Workspace1595740862744 workspace.</div>
-  // Personal workspace created
-  // <div class="pm-toast-body">You've successfully created the test personal workspace. Add collections and environments to it to get started.</div>
-
   isDisplayed() {
+    this.toastBody.waitForExist(30000);
     return this.toastBody.isExisting();
   }
 

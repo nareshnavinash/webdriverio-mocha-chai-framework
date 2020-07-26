@@ -32,7 +32,6 @@ describe('Workspace Tests', () => {
     });
     it('After cancelling newly added workspace name should not be listed', () => {
       assert.deepEqual(WorkSpace.getListedWorkspaces(), availableWorkspaces, 'Workspaces expeceted is not equal after cancelling new workspace creation');
-      availableWorkspaces = null;
     });
   });
 
@@ -102,6 +101,31 @@ describe('Workspace Tests', () => {
     });
     it('Validate whether the edited description is applied', () => {
       assert.equal(WorkSpace.getDescriptionforWorkspace(editedWorkspaceName), TestData.createData.editSummary, 'Edited summary is not reflected in the UI');
+    });
+  });
+
+  describe('Delete the workspace you created -> regression, sanity', () => {
+    it('Click on the delete option for a workspace', () => {
+      WorkSpace.clickDeleteWorkspaceOption(editedWorkspaceName);
+    });
+    it('Validate the texts in delete popup', () => {
+      const popupText = WorkSpace.getDeletePopupTexts();
+      assert.include(popupText, editedWorkspaceName, 'Delete Popup text does not have the workspace name');
+      assert.include(popupText, TestData.messages.deleteHeader, 'Delete Popup text does not have the Delete workspace header');
+      assert.include(popupText, TestData.messages.deleteMessage, 'Delete Popup text does not have the Delete workspace message');
+    });
+    it('Click on the delete button in the delete popup', () => {
+      WorkSpace.clickDeleteButtonInPopup();
+    });
+    it('Toast Messages should be as expected', () => {
+      assert.equal(Toast.isDisplayed(), true, 'Toast is not displayed for the delete action');
+      assert.equal(Toast.getToastTitle(), TestData.messages.toastDeleteMessage, 'Toast message title is not as expected');
+      assert.include(Toast.getToastBody(), editedWorkspaceName, 'Toast message body is not as expected');
+      Toast.dismissToastIfDisplayed();
+    });
+    it('Validate the workspace list and ensure that the deleted workspace is removed', () => {
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
+      assert.notInclude(WorkSpace.getListedWorkspaces(), editedWorkspaceName, 'Deleted workspace name is listed in the all workspace page');
     });
   });
 });

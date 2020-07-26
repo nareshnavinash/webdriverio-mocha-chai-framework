@@ -18,7 +18,7 @@ class WorkSpace extends Page {
   get newWorkspaceInviteTeamMember() {return $('input.Select-input');}
   get newWorkspaceCreateNewWorkspaceButton() {return $('button.pm-actions__confirm');}
   get newWorkspaceCancelButton() {return $('button.pm-actions__cancel');}
-  get deleteWorkspacePopup() {return $('pm-modal-confirm');}
+  get deleteWorkspacePopup() {return $('.pm-card-body');}
   get deleteWorkspacePopupDeleteButton() {return $('.pm-modal-confirm .pm-modal-confirm__actions button.pm-modal-confirm__confirm');}
   get deleteWorkspacePopupCancelButton() {return $('.pm-modal-confirm .pm-modal-confirm__actions button.pm-modal-confirm__cancel');}
 
@@ -89,6 +89,20 @@ class WorkSpace extends Page {
     const result = this.newWorkspaceSummary.getText();
     this.newWorkspaceCancelButton.click();
     return result;
+  }
+
+  clickDeleteWorkspaceOption(workspace) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceDelete.click();
+  }
+
+  getDeletePopupTexts() {
+    return this.deleteWorkspacePopup.getText();
+  }
+
+  clickDeleteButtonInPopup() {
+    this.deleteWorkspacePopupDeleteButton.click();
   }
 }
 

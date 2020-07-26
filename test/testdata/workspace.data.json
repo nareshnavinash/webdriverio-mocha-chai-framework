@@ -12,6 +12,9 @@
     },
     "messages": {
         "personalWorkspaceCreateMessage": "Personal workspace created",
-        "workspaceEditMessage": "Workspace details updated"
+        "workspaceEditMessage": "Workspace details updated",
+        "deleteHeader": "Delete Workspace",
+        "deleteMessage": "Some members might lose access to the collections and environments in this workspace. To avoid this, add them to another workspace before deleting this one.",
+        "toastDeleteMessage": "Personal workspace deleted"
     }
 }
