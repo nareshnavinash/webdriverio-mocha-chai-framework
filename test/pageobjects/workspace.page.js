@@ -10,6 +10,7 @@ class WorkSpace extends Page {
   get title() {return $('.pm-h1');}
   get workspaceList() {return $('.workspaces-list');}
   get workspaceAvailableNames() {return $('.rt-tbody');}
+  get workspaceNamesList() {return $$('.workspace-table__title .pm-link[href*="/workspaces"]');}
   get createWorkspaceButton() {return $('button.workspace-list__create');}
   get newWorkspaceName() {return $('input#ws-name');}
   get newWorkspaceSummary() {return $('textarea.pm-form-control');}
@@ -25,7 +26,11 @@ class WorkSpace extends Page {
   }
 
   getListedWorkspaces() {
-    return this.workspaceAvailableNames.getText();
+    var final = []
+    for (const res of this.workspaceNamesList) {
+      final.push(res.getText())
+    }
+    return final
   }
 
   enterDetailsInNewWorkspace(name, summary, type) {

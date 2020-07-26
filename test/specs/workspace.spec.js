@@ -45,8 +45,8 @@ describe('Workspace Tests', () => {
       WorkSpace.enterDetailsAndCreateNewWorkspace(workspaceName, TestData.createData.summary, TestData.createData.type);
     });
     it('After adding Collections page for that workspace should be listed', () => {
-      console.log(Collections.getNameFromToggler());
-      assert.include(Collections.getNameFromToggler(), workspaceName, 'Collection for Newly added workspace is not opened');
+      assert.equal(Collections.isDisplayed(), true, "Collections page is not displayed");
+      assert.equal(Collections.getNameFromToggler(), workspaceName, 'Collection for Newly added workspace is not opened');
     });
     it('Move back from collections page to all workspace page', () => {
       Collections.moveToWorkspace();
