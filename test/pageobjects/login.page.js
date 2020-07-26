@@ -1,12 +1,7 @@
 const Page = require('./page');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class LoginPage extends Page {
-  /**
-     * define selectors using getter methods
-     */
+  
   get inputUsername() {return $('#username');}
   get inputPassword() {return $('#password');}
   get rememberMeCheckBox() {return $('#remember-me-checkbox');}

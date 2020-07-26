@@ -17,6 +17,7 @@ class WorkSpace extends Page {
   get newWorkspaceType() {return $('.pm-toggle-switch span');}
   // Toggle types are - Personal | Team
   newWorkspaceTypeToggle(text) {return $('.pm-toggle-switch__item=' + text);}
+  get newWorkspaceInviteTeamMember() {return $('input.Select-input');}
   get newWorkspaceCreateNewWorkspaceButton() {return $('button.pm-actions__confirm');}
   get newWorkspaceCancelButton() {return $('button.pm-actions__cancel');}
 

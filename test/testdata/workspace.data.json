@@ -8,5 +8,8 @@
         "name": "Creating a Workspace",
         "summary": "To validate the workspace create functionality in the create workspace",
         "type": "Personal"
+    },
+    "messages": {
+        "personal_workspace_create_message": "Personal workspace created"
     }
 }
