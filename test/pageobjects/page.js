@@ -11,4 +11,10 @@ module.exports = class Page {
   open(path='') {
     return browser.url(config.url + path);
   }
+
+  emptyTextField(element) {
+    const valueLength = element.getValue().length;
+    const backSpaces = new Array(valueLength).fill('Backspace');
+    element.setValue(backSpaces);
+  }
 };
