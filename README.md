@@ -28,3 +28,6 @@ linter validate:
 npm run lint
 
 npm run lint -- --fix # auto fix
+
+clearValue() - issue
+https://github.com/webdriverio/webdriverio/issues/1140#issuecomment-663979205

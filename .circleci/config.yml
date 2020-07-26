@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:10-buster-browsers-legacy # Image that supports browser automation using JS
+      - image: circleci/node:dubnium-stretch-browsers-legacy # Image that supports browser automation using JS
     resource_class: small # Specifying the size of the instance that is needed to run the tests
     working_directory: ~/project
     steps:
@@ -32,10 +32,12 @@ jobs:
           command: |
             npm run test
       - run:
-          name: Allure report generation in circleci
+          name: "Run tests in Firefox"
           command: |
-            npm run report.ci
+            browser=firefox npm run test
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
-          path: ./allure-report
+          path: ./reports/json
+      - store_artifacts:
+          path: ./reports/screenshot
