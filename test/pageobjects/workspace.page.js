@@ -113,6 +113,7 @@ class WorkSpace extends Page {
     this.workspaceMoreOptionsButton(count).click();
     this.workspaceRename.click();
     assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    this.newWorkspaceName.clearValue();
     this.newWorkspaceName.setValue(name);
     this.newWorkspaceCreateNewWorkspaceButton.click();
   }
@@ -128,6 +129,7 @@ class WorkSpace extends Page {
     this.workspaceMoreOptionsButton(count).click();
     this.workspaceEditDescription.click();
     assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    this.newWorkspaceSummary.clearValue();
     this.newWorkspaceSummary.setValue(description);
     this.newWorkspaceCreateNewWorkspaceButton.click();
   }
