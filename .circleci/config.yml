@@ -31,6 +31,10 @@ jobs:
           name: "Run tests in Chrome"
           command: |
             npm run test
+      - run:
+          name: "Run tests in Firefox"
+          command: |
+            npm run test
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
