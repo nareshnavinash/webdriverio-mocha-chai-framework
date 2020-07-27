@@ -133,7 +133,7 @@ class WorkSpace extends Page {
     super.emptyTextField(this.newWorkspaceName);
     this.newWorkspaceName.moveTo();
     this.newWorkspaceName.click();
-    while (this.newWorkspaceName.getValue() !== '') {this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); this.newWorkspaceName.clearValue();}
+    while (this.newWorkspaceName.getValue() !== '') {this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); browser.pause(1000);}
   }
 
   /**
