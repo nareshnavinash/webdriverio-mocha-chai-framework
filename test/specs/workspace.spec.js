@@ -35,7 +35,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Auto_PW_WS_001 -> Create a new Personal Workspace -> regression, sanity', () => {
+  describe('Auto_PW_WS_001 -> Create a new Personal Workspace with name and description -> regression, sanity', () => {
     it('Get the list of workspaces available in the UI', () => {
       availableWorkspaces = WorkSpace.getListedWorkspaces();
     });
@@ -126,6 +126,110 @@ describe('Workspace Tests', () => {
     it('Validate the workspace list and ensure that the deleted workspace is removed', () => {
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
       assert.notInclude(WorkSpace.getListedWorkspaces(), editedWorkspaceName, 'Deleted workspace name is listed in the all workspace page');
+    });
+  });
+
+  describe('Auto_PW_WS_006 -> Create a new Personal Workspace with name alone -> regression', () => {
+    it('Navigate to all workspace page', () => {
+      browser.navigateTo(config.url);
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
+    });
+    it('Get the list of workspaces available in the UI', () => {
+      availableWorkspaces = WorkSpace.getListedWorkspaces();
+    });
+    it('Click on the create new workspace button', () => {
+      WorkSpace.createWorkspaceButton.click();
+      assert.equal(WorkSpace.isCreateNewWorkspaceDisplayed(), true, 'Create workspace page is not listed');
+    });
+    it('Create workspace button should be disabled before giving any input', () => {
+      assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Create Workspace button is enabled even before entering the new workspace details');
+    });
+    it('Enter the details in the create workspace page and give add new workspace button', () => {
+      WorkSpace.enterDetailsAndCreateNewWorkspace(workspaceName, TestData.createData.noSummary, TestData.createData.type);
+    });
+    it('Toast message stating the new workspace creation should be visible', () => {
+      assert.equal(Toast.getToastTitle(), TestData.messages.personalWorkspaceCreateMessage, 'Toast message title is not as expected');
+      assert.include(Toast.getToastBody(), workspaceName, 'Toast message body is not as expected');
+      Toast.dismissToastIfDisplayed();
+    });
+    it('After adding a new workspace Collections page for that workspace should be listed', () => {
+      assert.equal(Collections.isDisplayed(), true, 'Collections page is not displayed');
+      assert.equal(Collections.getNameFromToggler(), workspaceName, 'Collection for Newly added workspace is not opened');
+    });
+    it('Move back from collections page to all workspace page', () => {
+      Collections.moveToWorkspace();
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
+    });
+    it('The newly added workspace name should be listed in all workspace page', () => {
+      const currentWorkspacelist = WorkSpace.getListedWorkspaces();
+      assert.notDeepEqual(availableWorkspaces, currentWorkspacelist, 'Expected some changes in the workspace list but that is not happened');
+      assert.include(currentWorkspacelist, workspaceName, 'Newly added workspace is not listed');
+    });
+  });
+
+  describe('Auto_PW_WS_007 Adding description for a workspace for the first time through editing the description and validate cancel functionality for edit and delete workspace-> regression', () => {
+    it('Edit the description for the workspace for the first time', () => {
+      WorkSpace.editDescriptionForWorkspace(workspaceName, TestData.createData.editSummary);
+    });
+    it('Toast message stating the Edit of workspace should be displayed', () => {
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed Editing a workspace');
+      assert.equal(Toast.getToastTitle(), TestData.messages.workspaceEditMessage, 'Toast message title is not as expected');
+      assert.include(Toast.getToastBody(), workspaceName, 'Toast message body is not as expected');
+      Toast.dismissToastIfDisplayed();
+    });
+    it('Validate whether the edited description is applied', () => {
+      assert.equal(WorkSpace.getDescriptionforWorkspace(workspaceName), TestData.createData.editSummary, 'Edited summary is not reflected in the UI');
+    });
+    it('Edit the description for the workspace and make the description as empty', () => {
+      WorkSpace.makeDescriptionAsEmptyForWorkspace(workspaceName);
+    });
+    it('After removing the description the save button should be disabled and cancel the change', () => {
+      assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, "Create new workspace button is not disabled when the name is not entered");
+      WorkSpace.newWorkspaceCancelButton.click()
+    });
+    it('After cancelling the changes the edited value should not be saved', () => {
+      assert.equal(WorkSpace.getDescriptionforWorkspace(workspaceName), TestData.createData.editSummary, 'Edited summary is not reflected in the UI');
+    });
+    it('Click on the delete option for a workspace', () => {
+      WorkSpace.clickDeleteWorkspaceOption(workspaceName);
+    });
+    it('Validate the texts in delete popup', () => {
+      const popupText = WorkSpace.getDeletePopupTexts();
+      assert.include(popupText, workspaceName, 'Delete Popup text does not have the workspace name');
+      assert.include(popupText, TestData.messages.deleteHeader, 'Delete Popup text does not have the Delete workspace header');
+      assert.include(popupText, TestData.messages.deleteMessage, 'Delete Popup text does not have the Delete workspace message');
+    });
+    it('Click on the cancel button in the delete popup', () => {
+      WorkSpace.deleteWorkspacePopupCancelButton.click()
+    });
+    it('Validate the workspace list and ensure that the workspace is retained', () => {
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
+      assert.include(WorkSpace.getListedWorkspaces(), workspaceName, 'Deleted workspace name is listed in the all workspace page');
+    });  
+  });
+
+  describe('Auto_PW_WS_008 -> Try to create a workspace only with description -> regression', () => {
+    it('Navigate to all workspace page', () => {
+      browser.navigateTo(config.url);
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
+    });
+    it('Get the list of workspaces available in the UI', () => {
+      availableWorkspaces = WorkSpace.getListedWorkspaces();
+    });
+    it('Click on the create new workspace button', () => {
+      WorkSpace.createWorkspaceButton.click();
+      assert.equal(WorkSpace.isCreateNewWorkspaceDisplayed(), true, 'Create workspace page is not listed');
+    });
+    it('Create workspace button should be disabled before giving any input', () => {
+      assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Create Workspace button is enabled even before entering the new workspace details');
+    });
+    it('Enter the details in the create workspace page and give add new workspace button', () => {
+      WorkSpace.enterDetailsInNewWorkspace("", TestData.createData.summary, TestData.createData.type);
+    });
+    it('Validate the Create new workspace button, it should be in disabled state', () => {
+      assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, "Create new workspace button is not disabled when the name is not entered");
+      WorkSpace.newWorkspaceCancelButton.click()
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
     });
   });
 });

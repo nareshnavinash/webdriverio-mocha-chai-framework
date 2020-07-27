@@ -21,7 +21,7 @@ if (process.platform != 'darwin' && process.platform != 'win32') {
 
 
 // Retries count
-var runTimeRetries = process.env.retry || 0
+var runTimeRetries = process.env.retry || 1
 
 
 // Setting browser arguments based on the mode of run

@@ -104,7 +104,7 @@ npm run report
 To get this command working, make sure allure commandline is installed in your machine or allure plugin in case of jenkins.
 
 ## Retries
-By default retry is disabled in this framework, upon need one can change this default value by changing `var runTimeRetries = process.env.retry || 0` line in the wdio.conf.js file. WebdriverIO has multiple retry options at each test level that can be seen [here](https://webdriver.io/docs/retry.html)
+By default retry is set to 1 in this framework, upon need one can change this default value by changing `var runTimeRetries = process.env.retry || 1` line in the wdio.conf.js file. WebdriverIO has multiple retry options at each test level that can be seen [here](https://webdriver.io/docs/retry.html)
 
 ## Node-RSA
 

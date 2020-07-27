@@ -137,6 +137,21 @@ class WorkSpace extends Page {
   }
 
   /**
+   * a method edit the description of the workspace
+   * @param {string} workspace Name of the workspace
+   * @param {string} description New description for the workspace
+   * @return {void} returns nothing
+   */
+  makeDescriptionAsEmptyForWorkspace(workspace) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceEditDescription.click();
+    assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    super.emptyTextField(this.newWorkspaceSummary);
+    this.newWorkspaceSummary.clearValue();
+  }
+
+  /**
    * a method get the description of the workspace
    * @param {string} workspace Name of the workspace
    * @return {string} returns the description of the given workspace
