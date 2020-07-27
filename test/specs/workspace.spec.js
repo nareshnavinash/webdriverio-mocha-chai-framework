@@ -125,21 +125,13 @@ describe('Workspace Tests', () => {
     });
     it('Validate the workspace list and ensure that the deleted workspace is removed', () => {
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
-      let count;
-      for (count = 0; count < 100; i++) {
-        if (WorkSpace.getListedWorkspaces().includes(editedWorkspaceName)) {
-          browser.pause(1000);
-        } else {
-          break;
-        }
-      }
+      WorkSpace.waitUntillWorkspaceNameIsRemoved(editedWorkspaceName);
       assert.notInclude(WorkSpace.getListedWorkspaces(), editedWorkspaceName, 'Deleted workspace name is listed in the all workspace page');
     });
   });
 
   describe('Auto_PW_WS_006 -> Create a new Personal Workspace with name alone -> regression', () => {
     it('Navigate to all workspace page', () => {
-      browser.navigateTo(config.url);
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
     });
     it('Get the list of workspaces available in the UI', () => {
@@ -218,7 +210,6 @@ describe('Workspace Tests', () => {
 
   describe('Auto_PW_WS_008 -> Try to create a workspace only with description -> regression', () => {
     it('Navigate to all workspace page', () => {
-      browser.navigateTo(config.url);
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
     });
     it('Get the list of workspaces available in the UI', () => {
@@ -244,11 +235,72 @@ describe('Workspace Tests', () => {
   describe('Auto_PW_WS_009 -> Clear the name and validate the error message -> regression', function() {
     this.retries(4);
     it('Clear the name from the workspace after editing', function() {
+      browser.navigateTo(config.url);
       WorkSpace.clearNameForWorkspace(workspaceName);
     });
     it('Validate the error message is displayed', function() {
       assert.equal(WorkSpace.workspaceNameisRequiredError.waitForDisplayed(10000), true, 'workspace name cannot be empty message is not displayed when the name is removed from the workspace');
       WorkSpace.newWorkspaceCancelButton.click();
+    });
+  });
+
+  describe('Auto_PW_WS_010 -> Validate the sorting in All workspace page and validate the duplicate names for workspaces -> regression', () => {
+    let firstDisplayedNames;
+    let sortedFirstDisplayedNames;
+    it('Get the list of workspaces from the all workspace page', () => {
+      firstDisplayedNames = WorkSpace.getListedWorkspaces();
+      sortedFirstDisplayedNames = firstDisplayedNames.sort();
+    });
+    it('Validate whether the list of names are sorted alphabetically', () => {
+      assert.deepEqual(sortedFirstDisplayedNames, firstDisplayedNames, 'Workspace is not sorted in alphabetical order');
+    });
+    it('Rename the workspace with a word starts with z', () => {
+      WorkSpace.editNameForWorkspace(workspaceName, TestData.createData.nameStartsWithZ);
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed Editing a workspace');
+      Toast.dismissToastIfDisplayed();
+    });
+    it('Get the list of workspaces from the all workspace page', () => {
+      firstDisplayedNames = WorkSpace.getListedWorkspaces();
+      sortedFirstDisplayedNames = firstDisplayedNames.sort();
+    });
+    it('Validate whether the list of names are sorted alphabetically', () => {
+      assert.deepEqual(sortedFirstDisplayedNames, firstDisplayedNames, 'Workspace is not sorted in alphabetical order');
+    });
+    it('Now create a workspace with the same name', () => {
+      WorkSpace.createWorkspaceButton.click();
+      assert.equal(WorkSpace.isCreateNewWorkspaceDisplayed(), true, 'Create workspace page is not listed');
+      WorkSpace.enterDetailsAndCreateNewWorkspace(TestData.createData.nameStartsWithZ, TestData.createData.summary, TestData.createData.type);
+      assert.equal(Toast.getToastTitle(), TestData.messages.personalWorkspaceCreateMessage, 'Toast message title is not as expected');
+      Toast.dismissToastIfDisplayed();
+      assert.equal(Collections.isDisplayed(), true, 'Collections page is not displayed');
+      Collections.moveToWorkspace();
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
+    });
+    it('Cleanup the workspaces created for testing', () => {
+      WorkSpace.clickDeleteWorkspaceOption(TestData.createData.nameStartsWithZ);
+      WorkSpace.clickDeleteButtonInPopup();
+      assert.equal(Toast.isDisplayed(), true, 'Toast is not displayed for the delete action');
+      Toast.dismissToastIfDisplayed();
+      assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
+      WorkSpace.clickDeleteWorkspaceOption(TestData.createData.nameStartsWithZ);
+      WorkSpace.clickDeleteButtonInPopup();
+      assert.equal(Toast.isDisplayed(), true, 'Toast is not displayed for the delete action');
+      Toast.dismissToastIfDisplayed();
+    });
+  });
+
+  describe('Auto_PW_WS_011 Validate whether delete is diabled for default workspace (My Workspace) -> regression', () => {
+    it('Click delete for the default workspace', () => {
+      WorkSpace.clickDeleteWorkspaceOption(TestData.messages.defaultWorkspaceName);
+    });
+    it('Validate the texts in delete popup', () => {
+      const popupText = WorkSpace.getDeletePopupTexts();
+      assert.include(popupText, TestData.messages.defaultWorkspaceName, 'Delete Popup text does not have the workspace name');
+      assert.include(popupText, TestData.messages.deleteHeader, 'Delete Popup text does not have the Delete workspace header');
+      assert.include(popupText, TestData.messages.deleteMessage, 'Delete Popup text does not have the Delete workspace message');
+    });
+    it('Verify the delete button is diabled', () => {
+      assert.equal(WorkSpace.deleteWorkspacePopupDeleteButton.isEnabled(), false, 'Delete button is enabled for the default workspace');
     });
   });
 });

@@ -53,41 +53,46 @@ Auto_PW_WS_002",
 3. Upper limit for the number of characters allowed in workspace description should be set to avoid really long strings.
 
 Produt Team's input is needed"
-2,List Workspaces,TC_PW_WS_006,Verify the sorting of workspaces in 'All Workspace' page,"1. Login to Postman
-2. Navigate to All workspaces","1. Have minimum of Three workspaces in the list view, if not create one",1. All the workspaces should be listed in ascending order,Pass,MEDIUM,NA,
-2,List Workspaces,TC_PW_WS_007,Edit the name of a workspace and then validate the sort in All Workspace apge,"1. Login to Postman
+1,Create Workspaces,TC_PW_WS_006,Create a workspace with same name,"1. Login to Postman
+2. Navigate to All workspaces
+3. Create a workspace and have.","1. Click on the 'Create a new workspace' button.
+2. Now enter the same name that we have given for previous workspace
+3. Click on create new workspace button after entering the details",1. User should be allowed to create workspaces with same names,Pass,MEDIUM,Auto_PW_WS_011,
+2,List Workspaces,TC_PW_WS_007,Verify the sorting of workspaces in 'All Workspace' page,"1. Login to Postman
+2. Navigate to All workspaces","1. Have minimum of Three workspaces in the list view, if not create one",1. All the workspaces should be listed in ascending order,Pass,MEDIUM,Auto_PW_WS_010,
+2,List Workspaces,TC_PW_WS_008,Edit the name of a workspace and then validate the sort in All Workspace apge,"1. Login to Postman
 2. Navigate to All workspaces","1. Have minimum of Three workspaces in the list view, if not create one
 2. Lets say we have three workspaces,
 Apple
 Banana
 Cinnamon
-3. Now Rename the Apple to Lemon",The sorting should happen even if we rename the workspace.,Pass,MEDIUM,NA,
-3,Edit Workspace,TC_PW_WS_008,Editing the name for a workspace,"1. Login to Postman
+3. Now Rename the Apple to Lemon",The sorting should happen even if we rename the workspace.,Pass,MEDIUM,Auto_PW_WS_010,
+3,Edit Workspace,TC_PW_WS_009,Editing the name for a workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available","1. Click the elipses against the workspace for which the name has to be changed.
 2. Click on rename
 3. Change the name of the Workspace and click on save button","1. Workspace details containing, name, description and type of the selected workspace should be listed
 2. After saving the page should be moved back to All Workspace page and list the renamed workspace in alphabatical order",Pass,HIGH,Auto_PW_WS_004,
-3,Edit Workspace,TC_PW_WS_009,Try to edit the workspace and save with no name,"1. Login to Postman
+3,Edit Workspace,TC_PW_WS_010,Try to edit the workspace and save with no name,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available","1. Click the elipses against the workspace for which the name has to be changed.
 2. Click on rename
 3. Empty the name field of the Workspace and click on save button","1. User should not be allowed to save the workspace with no name, the save button should be disabled",Pass,MEDIUM,Auto_PW_WS_009,
-3,Edit Workspace,TC_PW_WS_010,Editing the description for a workspace,"1. Login to Postman
+3,Edit Workspace,TC_PW_WS_011,Editing the description for a workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available and add the description for that workspace","1. Click the elipses against the workspace for which the description has to be changed.
 2. Click on Edit description
 3. Change the Description of the Workspace and click on save button","1. Workspace details containing, name, description and type of the selected workspace should be listed
 2. After saving the page should be moved back to All Workspace page.
 3 Now if you edit the same workspace you should see the changed description",Pass,HIGH,Auto_PW_WS_004,
-3,Edit Workspace,TC_PW_WS_011,Adding the description for an existing workspace,"1. Login to Postman
+3,Edit Workspace,TC_PW_WS_012,Adding the description for an existing workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available without any description for the workspace","1. Click the elipses against the workspace for which the description has to be changed.
 2. Click on Edit description
 3. Add the Description of the Workspace and click on save button","1. Workspace details containing, name, description and type of the selected workspace should be listed
 2. After saving the page should be moved back to All Workspace page.
 3 Now if you edit the same workspace you should see the added description",Pass,HIGH,Auto_PW_WS_007,
-3,Edit Workspace,TC_PW_WS_012,Removing the description for an existing workspace,"1. Login to Postman
+3,Edit Workspace,TC_PW_WS_013,Removing the description for an existing workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available and add the description for that workspace","1. Click the elipses against the workspace for which the description has to be changed.
 2. Click on Edit description
@@ -99,7 +104,7 @@ Handled gracefully","1. Not sure if it is intentional, when user removes the des
 2. Since this is not an harming issue, handled the same in automation without making it to fail.
 
 Product Team's input is needed."
-3,Edit Workspace,TC_PW_WS_013,Cancelling the edit for a workspace without saving,"1. Login to Postman
+3,Edit Workspace,TC_PW_WS_014,Cancelling the edit for a workspace without saving,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available and add the description for that workspace","1. Click the elipses against the workspace for which the description has to be changed.
 2. Click on Edit description
@@ -107,7 +112,7 @@ Product Team's input is needed."
 2. After clicking cancel button, all workspace page should be listed.
 3. The old name and description of the workspace should be retained.
 ",Pass,MEDIUM,Auto_PW_WS_007,
-4,Delete Workspace,TC_PW_WS_014,Delete a workspace which was created by the user,"1. Login to Postman
+4,Delete Workspace,TC_PW_WS_015,Delete a workspace which was created by the user,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace.","1. Click the elipses against the workspace which has to be deleted.
 2. Click on the delete button
@@ -118,7 +123,7 @@ Product Team's input is needed."
 4. Click on the delete button in the popup. After clicking on delete button a toast message with header 'Personal workspace deleted' should be displayed.
 5. The body of the toast message should be ""You've deleted the <workspace_name> workspace.""
 6. All workspace page should be listed and the deleted workspace should not be listed",Pass,HIGH,Auto_PW_WS_005,
-4,Delete Workspace,TC_PW_WS_015,Cancel the delete of a workspace in the popup,"1. Login to Postman
+4,Delete Workspace,TC_PW_WS_016,Cancel the delete of a workspace in the popup,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace.","1. Click the elipses against the workspace which has to be deleted
 2. Click on the Delete button
@@ -128,11 +133,11 @@ Product Team's input is needed."
 3. A summary stating the impact of the delete workspace should be available in the popup as ""Some members might lose access to the collections and environments in this workspace. To avoid this, add them to another workspace before deleting this one.""
 4. Click on the cancel button in the popup
 5. After cancelling the delete, all workspace page should be listed and the workspace which is cancelled from deletion should be listed",Pass,MEDIUM,Auto_PW_WS_007,
-4,Delete Workspace,TC_PW_WS_016,Try to delete the 'My Workspace' default workspace that is created signup,"1. Login to Postman
+4,Delete Workspace,TC_PW_WS_017,Try to delete the 'My Workspace' default workspace that is created signup,"1. Login to Postman
 2. Navigate to All workspaces","1. Click the elipses against 'My Workspace'.
 2. Click on the Delete button","1. A popup with header 'Delete Workspace' should be displayed.
 2. Body in the popup should have the first liner as 'Are you sure you want to delete <name_of_the_workspace>?' 
 3. A summary stating the impact of the delete workspace should be available in the popup as ""Some members might lose access to the collections and environments in this workspace. To avoid this, add them to another workspace before deleting this one.""
-4. Delete button should be disabled in the popup",Pass,HIGH,NA,"We need to change the message that we show while we delete the default workspace.
+4. Delete button should be disabled in the popup",Pass,HIGH,Auto_PW_WS_011,"We need to change the message that we show while we delete the default workspace.
 
 Product Team's input is needed."

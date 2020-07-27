@@ -46,6 +46,22 @@ class WorkSpace extends Page {
   }
 
   /**
+   * Method to wait untill the name of the workspace getting removed from the list view
+   * @param {string} workspaceName Name of the workspace
+   * @return {void} returns nothing
+   */
+  waitUntillWorkspaceNameIsRemoved(workspaceName) {
+    let count;
+    for (count = 0; count < 10; count++) {
+      if (this.getListedWorkspaces().includes(workspaceName)) {
+        browser.pause(1000);
+      } else {
+        break;
+      }
+    }
+  }
+
+  /**
    * a method to enter details in the create new workspace page
    * @param {string} name Name of the workspace
    * @param {string} summary Summary of the workspace
@@ -134,6 +150,8 @@ class WorkSpace extends Page {
     this.newWorkspaceName.moveTo();
     this.newWorkspaceName.click();
     while (this.newWorkspaceName.getValue() !== '') {this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); browser.pause(1000);}
+    browser.pause(2000);
+    while (this.newWorkspaceName.getValue() !== '') {this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); browser.pause(1000);}
   }
 
   /**
@@ -164,7 +182,9 @@ class WorkSpace extends Page {
     this.workspaceEditDescription.click();
     assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
     super.emptyTextField(this.newWorkspaceSummary);
-    this.newWorkspaceSummary.clearValue();
+    while (this.newWorkspaceSummary.getValue() !== '') {this.newWorkspaceSummary.doubleClick(); browser.keys('Backspace'); browser.pause(1000);}
+    browser.pause(2000);
+    while (this.newWorkspaceSummary.getValue() !== '') {this.newWorkspaceSummary.doubleClick(); browser.keys('Backspace'); browser.pause(1000);}
   }
 
   /**
