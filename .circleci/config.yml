@@ -38,7 +38,7 @@ jobs:
       - run:
           name: "Test Firefox"
           command: |
-            firefox
+            firefox &
       - run:
           name: "Run tests in Firefox"
           command: |
