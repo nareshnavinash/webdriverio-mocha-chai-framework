@@ -13,6 +13,7 @@ class WorkSpace extends Page {
   get newWorkspaceName() {return $('input#ws-name');}
   get newWorkspaceSummary() {return $('textarea.pm-form-control');}
   get newWorkspaceType() {return $('.pm-toggle-switch span');}
+  get workspaceNameisRequiredError() {return $('.pm-input-message-error=Workspace name cannot be empty');}
   // Toggle types are - Personal | Team
   newWorkspaceTypeToggle(text) {return $('.pm-toggle-switch__item=' + text);}
   get newWorkspaceInviteTeamMember() {return $('input.Select-input');}
@@ -120,6 +121,22 @@ class WorkSpace extends Page {
   }
 
   /**
+   * a method to clear the name of the workspace
+   * @param {string} workspace Name of the workspace
+   * @return {void} returns nothing
+   */
+  clearNameForWorkspace(workspace) {
+    const count = this.getWorkspaceCountInList(workspace);
+    this.workspaceMoreOptionsButton(count).click();
+    this.workspaceRename.click();
+    assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
+    super.emptyTextField(this.newWorkspaceName);
+    this.newWorkspaceName.moveTo()
+    this.newWorkspaceName.click()
+    while (this.newWorkspaceName.getValue() !== '') { this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); this.newWorkspaceName.clearValue(); }
+  }
+
+  /**
    * a method edit the description of the workspace
    * @param {string} workspace Name of the workspace
    * @param {string} description New description for the workspace
@@ -137,9 +154,8 @@ class WorkSpace extends Page {
   }
 
   /**
-   * a method edit the description of the workspace
+   * a method to clear the description of the workspace
    * @param {string} workspace Name of the workspace
-   * @param {string} description New description for the workspace
    * @return {void} returns nothing
    */
   makeDescriptionAsEmptyForWorkspace(workspace) {

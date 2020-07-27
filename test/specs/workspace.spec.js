@@ -125,6 +125,14 @@ describe('Workspace Tests', () => {
     });
     it('Validate the workspace list and ensure that the deleted workspace is removed', () => {
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed deleting a workspace');
+      var count;
+      for (count = 0; count < 100; i++) {
+        if (WorkSpace.getListedWorkspaces().includes(editedWorkspaceName)) {
+          browser.pause(1000)
+        } else {
+          break;
+        }
+      }
       assert.notInclude(WorkSpace.getListedWorkspaces(), editedWorkspaceName, 'Deleted workspace name is listed in the all workspace page');
     });
   });
@@ -230,6 +238,16 @@ describe('Workspace Tests', () => {
       assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Create new workspace button is not disabled when the name is not entered');
       WorkSpace.newWorkspaceCancelButton.click();
       assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
+    });
+  });
+
+  describe('Auto_PW_WS_009 -> Clear the name and validate the error message -> regression', () => {
+    it('Clear the name from the workspace after editing', () => {
+      WorkSpace.clearNameForWorkspace(workspaceName)
+    });
+    it('Validate the error message is displayed', () => {
+      assert.equal(WorkSpace.workspaceNameisRequiredError.waitForDisplayed(10000), true, "workspace name cannot be empty message is not displayed when the name is removed from the workspace");
+      WorkSpace.newWorkspaceCancelButton.click()
     });
   });
 });

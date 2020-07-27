@@ -72,7 +72,7 @@ Cinnamon
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available","1. Click the elipses against the workspace for which the name has to be changed.
 2. Click on rename
-3. Empty the name field of the Workspace and click on save button","1. User should not be allowed to save the workspace with no name, the save button should be disabled",Pass,MEDIUM,NA,
+3. Empty the name field of the Workspace and click on save button","1. User should not be allowed to save the workspace with no name, the save button should be disabled",Pass,MEDIUM,Auto_PW_WS_009,
 3,Edit Workspace,TC_PW_WS_010,Editing the description for a workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available and add the description for that workspace","1. Click the elipses against the workspace for which the description has to be changed.
