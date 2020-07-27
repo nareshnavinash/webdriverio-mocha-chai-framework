@@ -18,7 +18,7 @@ describe('Workspace Tests', () => {
     assert.equal(WorkSpace.isDisplayed(), true, 'Workspace page is not displayed');
   });
 
-  describe('Enter Details in workspace form and cancel -> regression', () => {
+  describe('Auto_PW_WS_003 -> Enter Details in workspace form and cancel -> regression', () => {
     it('Get the list of workspaces available in the UI', () => {
       availableWorkspaces = WorkSpace.getListedWorkspaces();
     });
@@ -35,7 +35,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Create a new Personal Workspace -> regression, sanity', () => {
+  describe('Auto_PW_WS_001 -> Create a new Personal Workspace -> regression, sanity', () => {
     it('Get the list of workspaces available in the UI', () => {
       availableWorkspaces = WorkSpace.getListedWorkspaces();
     });
@@ -56,7 +56,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Read the list of your personal workspaces -> regression, sanity', () => {
+  describe('Auto_PW_WS_002 -> Read the list of your personal workspaces -> regression, sanity', () => {
     it('After adding a new workspace Collections page for that workspace should be listed', () => {
       assert.equal(Collections.isDisplayed(), true, 'Collections page is not displayed');
       assert.equal(Collections.getNameFromToggler(), workspaceName, 'Collection for Newly added workspace is not opened');
@@ -72,7 +72,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Update your newly created workspace -> regression, sanity', () => {
+  describe('Auto_PW_WS_004 -> Update your newly created workspace -> regression, sanity', () => {
     editedWorkspaceName = null;
     it('Rename the workspace which is created', () => {
       editedWorkspaceName = workspaceName + ' Edited';
@@ -104,7 +104,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Delete the workspace you created -> regression, sanity', () => {
+  describe('Auto_PW_WS_005 -> Delete the workspace you created -> regression, sanity', () => {
     it('Click on the delete option for a workspace', () => {
       WorkSpace.clickDeleteWorkspaceOption(editedWorkspaceName);
     });

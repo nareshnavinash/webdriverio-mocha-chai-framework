@@ -235,7 +235,7 @@ exports.config = {
       ['junit', {
         outputDir: 'reports/junit',
         outputFileFormat: function(options) {
-          return `test-${options.cid}-results.xml`
+          return 'test-' + runTimeBrowser + '-results.xml'
         }
       }],
         ['json',{
