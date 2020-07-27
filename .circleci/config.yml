@@ -32,9 +32,9 @@ jobs:
           command: |
             npm run test
       - run:
-          name: "Test Firefox"
+          name: "Install dbux-x11 to run tests in Firefox"
           command: |
-            firefox
+            sudo apt-get install dbus-x11
       - run:
           name: "Run tests in Firefox"
           command: |
