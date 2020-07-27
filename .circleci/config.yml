@@ -32,6 +32,10 @@ jobs:
           command: |
             npm run test
       - run:
+          name: "Test Firefox"
+          command: |
+            firefox
+      - run:
           name: "Run tests in Firefox"
           command: |
             browser=firefox npm run test

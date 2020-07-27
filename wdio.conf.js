@@ -29,7 +29,7 @@ let chrome_browser_args = {}
 let firefox_browser_args = {}
 if (headless) {
     chrome_browser_args = ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--window-size=1200,700']
-    firefox_browser_args = ["-headless"]
+    firefox_browser_args = ['-headless']
 } else {
     chrome_browser_args = ['--disable-dev-shm-usage', '--window-size=1200,700']
     firefox_browser_args = []
@@ -57,7 +57,7 @@ if (runTimeBrowser == 'chrome') {
     runTimeCapabilities = [{
         maxInstances: maxBrowserInstance,
         browserName: 'firefox',
-        "moz:firefoxOptions":{
+        "moz:firefoxOptions": {
             args: firefox_browser_args
         }
     }]
