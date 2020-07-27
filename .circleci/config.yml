@@ -31,18 +31,6 @@ jobs:
           name: "Run tests in Chrome"
           command: |
             npm run test
-      - run:
-          name: "Install dbux-x11"
-          command: |
-            sudo apt-get install dbus-x11
-      - run:
-          name: "Test Firefox"
-          command: |
-            firefox &
-      - run:
-          name: "Run tests in Firefox"
-          command: |
-            browser=firefox npm run test
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
