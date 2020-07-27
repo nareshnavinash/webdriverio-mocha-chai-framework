@@ -131,9 +131,9 @@ class WorkSpace extends Page {
     this.workspaceRename.click();
     assert.equal(this.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Save button is not disabled before editing the values');
     super.emptyTextField(this.newWorkspaceName);
-    this.newWorkspaceName.moveTo()
-    this.newWorkspaceName.click()
-    while (this.newWorkspaceName.getValue() !== '') { this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); this.newWorkspaceName.clearValue(); }
+    this.newWorkspaceName.moveTo();
+    this.newWorkspaceName.click();
+    while (this.newWorkspaceName.getValue() !== '') {this.newWorkspaceName.doubleClick(); browser.keys('Backspace'); this.newWorkspaceName.clearValue();}
   }
 
   /**
