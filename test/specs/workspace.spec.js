@@ -241,11 +241,12 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Auto_PW_WS_009 -> Clear the name and validate the error message -> regression', () => {
-    it('Clear the name from the workspace after editing', () => {
+  describe('Auto_PW_WS_009 -> Clear the name and validate the error message -> regression', function() {
+    this.retries(4);
+    it('Clear the name from the workspace after editing', function() {
       WorkSpace.clearNameForWorkspace(workspaceName);
     });
-    it('Validate the error message is displayed', () => {
+    it('Validate the error message is displayed', function() {
       assert.equal(WorkSpace.workspaceNameisRequiredError.waitForDisplayed(10000), true, 'workspace name cannot be empty message is not displayed when the name is removed from the workspace');
       WorkSpace.newWorkspaceCancelButton.click();
     });

@@ -22,6 +22,8 @@ module.exports = {
     'babel',
   ],
   'rules': {
+    'no-invalid-this': 0,
+    'babel/no-invalid-this': 0,
     'arrow-parents': [0, 'as-needed'],
     'require-jsdoc': 'off',
     'brace-style': [0, 'allman', { 'allowSingleLine': true }],
