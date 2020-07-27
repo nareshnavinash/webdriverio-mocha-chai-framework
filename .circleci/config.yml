@@ -34,7 +34,7 @@ jobs:
       - run:
           name: "Run tests in Firefox"
           command: |
-            npm run test
+            browser=firefox npm run test
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
