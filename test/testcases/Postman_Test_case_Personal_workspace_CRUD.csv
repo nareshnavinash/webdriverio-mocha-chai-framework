@@ -72,6 +72,8 @@ Cinnamon
 3. Have three workspaces Apple, Banana, and Cinnamon","1. Click on the name header.
 2. After validating the sort, click on the name header again","1. On the first click, the sorting should be changed to descending order.
 2. When the user clicks the name header, the sorting should be done changed to ascending order",Pass,HIGH,Auto_PW_WS_010,
+2,List Workspaces,,Check the maximum number of workspaces listed in single page,"1. Login to Postman
+2. Navigate to All workspaces",1. create more than 10 workspaces,1. We need to have pagination functionality to limit the number of workspaces listed in the all workspace page,Clarity,HIGH,NA,Product Team's input is needed.
 3,Edit Workspace,TC_PW_WS_010,Editing the name for a workspace,"1. Login to Postman
 2. Navigate to All workspaces
 3. Create a workspace if no workspace is available","1. Click the elipses against the workspace for which the name has to be changed.

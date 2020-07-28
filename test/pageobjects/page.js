@@ -12,6 +12,11 @@ module.exports = class Page {
     return browser.url(config.url + path);
   }
 
+  /**
+  * Clears text from the textbox or text area, since clearValue() in webdriverio has an issue while running in docker (debetian OS)
+  * @param {string} element element from which the texts has to be removed
+  * @return {void} returns nothing
+  */
   emptyTextField(element) {
     const valueLength = element.getValue().length;
     const backSpaces = new Array(valueLength).fill('Backspace');
