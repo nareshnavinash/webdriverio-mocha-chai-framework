@@ -144,7 +144,7 @@ describe('Workspace Tests', () => {
     it('Create workspace button should be disabled before giving any input', () => {
       assert.equal(WorkSpace.newWorkspaceCreateNewWorkspaceButton.isEnabled(), false, 'Create Workspace button is enabled even before entering the new workspace details');
     });
-    it('Enter the details in the create workspace page and give add new workspace button', () => {
+    it('Enter the name alone and give add new workspace button', () => {
       WorkSpace.enterDetailsAndCreateNewWorkspace(workspaceName, TestData.createData.noSummary, TestData.createData.type);
     });
     it('Toast message stating the new workspace creation should be visible', () => {
@@ -232,7 +232,7 @@ describe('Workspace Tests', () => {
     });
   });
 
-  describe('Auto_PW_WS_009 -> Clear the name and validate the error message -> regression', function() {
+  describe('Auto_PW_WS_009 -> Validate whether the user is not allowed to save when we remove the workspace name through edit -> regression', function() {
     this.retries(4);
     it('Clear the name from the workspace after editing', function() {
       browser.navigateTo(config.url);
@@ -266,7 +266,27 @@ describe('Workspace Tests', () => {
     it('Validate whether the list of names are sorted alphabetically', () => {
       assert.deepEqual(sortedFirstDisplayedNames, firstDisplayedNames, 'Workspace is not sorted in alphabetical order');
     });
-    it('Now create a workspace with the same name', () => {
+    it('Click on the name header to sort in descending order', () => {
+      WorkSpace.workspaceNameHeader.click();
+    });
+    it('Get the list of available names in the workspace and validate the descending order', () => {
+      firstDisplayedNames = WorkSpace.getListedWorkspaces();
+      sortedFirstDisplayedNames = firstDisplayedNames.reverse();
+    });
+    it('Validate whether the list of names are sorted in descending order', () => {
+      assert.deepEqual(sortedFirstDisplayedNames, firstDisplayedNames, 'Workspace is not sorted in descending order');
+    });
+    it('Click on the name header again to sort in ascending order', () => {
+      WorkSpace.workspaceNameHeader.click();
+    });
+    it('Get the list of available names in the workspace and validate the ascending order', () => {
+      firstDisplayedNames = WorkSpace.getListedWorkspaces();
+      sortedFirstDisplayedNames = firstDisplayedNames.sort();
+    });
+    it('Validate whether the list of names are sorted in ascending order', () => {
+      assert.deepEqual(sortedFirstDisplayedNames, firstDisplayedNames, 'Workspace is not sorted in ascending order');
+    });
+    it('Now create a workspace with the same name and validate whether the workspace can be created', () => {
       WorkSpace.createWorkspaceButton.click();
       assert.equal(WorkSpace.isCreateNewWorkspaceDisplayed(), true, 'Create workspace page is not listed');
       WorkSpace.enterDetailsAndCreateNewWorkspace(TestData.createData.nameStartsWithZ, TestData.createData.summary, TestData.createData.type);

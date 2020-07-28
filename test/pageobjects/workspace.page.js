@@ -6,6 +6,7 @@ class WorkSpace extends Page {
   get workspaceAvailableNames() {return $('.rt-tbody');}
   get workspaceNamesList() {return $$('.workspace-table__title .pm-link[href*="/workspaces"]');}
   get createWorkspaceButton() {return $('button.workspace-list__create');}
+  get workspaceNameHeader() {return $('.rt-thead div.-cursor-pointer');}
   workspaceMoreOptionsButton(count) {return $('div.rt-table div.rt-tbody div:nth-child(' + count + ') div.rt-td.workspace-table__actions button.pm-btn-icon');}
   get workspaceRename() {return $('div.option=Rename');}
   get workspaceEditDescription() {return $('div.option=Edit Description');}
